@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/htetaungkhant/WalletBackEnd/issues"
   },
-  "homepage": "https://github.com/htetaungkhant/WalletBackEnd#readme"
+  "homepage": "https://github.com/htetaungkhant/WalletBackEnd#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }

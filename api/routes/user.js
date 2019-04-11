@@ -6,6 +6,28 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
+router.get('/:userEmail',(req,res,next)=>{
+    const userEmail=req.params.userEmail;
+    User.find({ email: userEmail })
+   .select('name email phoneNumber balance _id')
+   .exec()
+   .then(doc=>{
+       console.log("From database",doc);
+       if(doc){
+        res.status(200).json({
+            user: doc
+        });
+       }
+       else{
+           res.status(404).json({message: 'No Valid entry found for provided ID'});
+       }
+   })
+   .catch(err =>{
+       console.log(err);
+       res.status(500).json({error:err});
+   });
+});
+
 router.post('/signup', (req, res, next) => {
     User.find({ email: req.body.email })
         .exec()
@@ -25,8 +47,10 @@ router.post('/signup', (req, res, next) => {
                     else {
                         const user = new User({
                             _id: new mongoose.Types.ObjectId(),
+                            name: req.body.name,
                             email: req.body.email,
-                            password: hash
+                            password: hash,
+                            phoneNumber: req.body.phoneNumber
                         });
                         user
                             .save()

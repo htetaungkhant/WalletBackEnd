@@ -6,12 +6,13 @@ const mongoose=require('mongoose');
 
 const productRoutes=require('./api/routes/product');
 const userRoutes=require('./api/routes/user');
+const walletRoutes=require('./api/routes/wallet');
 
 const mongoDB = 'mongodb://localhost:27017/VendingMachineWallet';
 mongoose.connect(mongoDB,{useNewUrlParser:true},function(error) {
     if(error)
         {console.log(error);}
-    console.log("connected");
+    console.log("database connected");
   });
 mongoose.Promise=global.Promise;
 
@@ -32,6 +33,7 @@ app.use((req,res,next)=>{
 
 app.use('/products',productRoutes);
 app.use('/user',userRoutes);
+app.use('/wallet',walletRoutes);
 
 app.use((req,res,next)=>{
     const error=new Error('Not found');

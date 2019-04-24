@@ -28,6 +28,24 @@ router.get('/:userEmail',(req,res,next)=>{
    });
 });
 
+
+router.post('/checkMailExist', (req, res, next) => {
+    User.find({ email: req.body.email })
+        .exec()
+        .then(user => {
+            if (user.length >= 1) {
+                return res.status(200).json({
+                    message: 'Email already exists'
+                });
+            }
+            else {
+                return res.status(401).json({
+                message: 'err'
+            });
+            }
+        })
+});
+
 router.post('/signup', (req, res, next) => {
     User.find({ email: req.body.email })
         .exec()
